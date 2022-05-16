@@ -1,0 +1,27 @@
+{%extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}House of ELegance Sign Up{% endblock %}
+
+{% block content %}
+
+    <br><br><br>
+    <div class="container">
+        <div class="page-header">
+            <div class="row">
+                <h1> Hello, {% if username %} {{username}} {% else %} Stranger {% endif %}</h1>
+                {% if not known %}
+                    <p> Pleased to meet you! </p>
+                {% else %}
+                    <p> Happy to see you again! </p>
+                {% endif %}
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    {{wtf.quick_form(form)}}
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
