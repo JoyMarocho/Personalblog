@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #000;">
+    <a class="navbar-brand" href="/" style="font-family: 'Major Mono Display' ; font-size: 30px">The House of Elegance Blog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="content-section">
+        <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+            <li><a href="{{url_for('main.profile',id=current_user.id)}}"> Profile </a></li>
+            <li><a href="{{url_for('auth.logout')}}"> Sign out </a></li>
+            {% else %}
+            <li><a href="{{url_for('auth.login')}}"> Log In </a></li>
+            {%endif%}
+        </ul>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need An Account? <a class="ml-2" href="{{ url_for('auth.login') }}"> Sign Up Now </a>
+            </small>
+        </div>
+    </div>
+</nav>
