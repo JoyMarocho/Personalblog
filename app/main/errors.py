@@ -14,6 +14,6 @@ def four_Ow_four(error):
         new_sub = Subscribers(email = request.form.get("subscriber"))
         db.session.add(new_sub)
         db.session.commit()
-        mail_message("Thank you for subscribing to the Avache blog", 
+        mail_message("Thank you for subscribing to The House of Elegance blog", 
                         "email/welcome", new_sub.email)
     return render_template('fourOwfour.html'),404
