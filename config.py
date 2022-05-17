@@ -2,7 +2,7 @@ import os
 # import re
 
 class Config:
-    SECRET_KEY = 'x!P}T*B2/_'
+    SECRET_KEY = 'jojo001'
     SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://bigbaby:jojo123@localhost/personalblog'
     UPLOADED_PHOTOS_DEST = 'app/static/photos'
     SQALCHEMY_TRACK_MODIFICATIONS = True
@@ -30,7 +30,8 @@ class TestConfig(Config):
 
 class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://bigbaby:jojo123@localhost/personalblog'
-    DEBUG = True
+
+DEBUG = True
 
 
 config_options = {
