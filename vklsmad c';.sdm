@@ -1,0 +1,4 @@
+ id | username | email | bio | profile_pic_path | pass_secure | comments | posts | role_id | password_hash 
+----+----------+-------+-----+------------------+-------------+----------+-------+---------+---------------
+(0 rows)
+

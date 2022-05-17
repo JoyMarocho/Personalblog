@@ -17,6 +17,7 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(64),unique=True, index=True,nullable = False)
     email = db.Column(db.String(255),unique=True, index=True,nullable = False)
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
+    user_id = db.Column(db.Integer,db.ForeignKey('comments.id'))
     bio = db.Column(db.String(255),default ='My default Bio')
     profile_pic_path = db.Column(db.String(),default ='default.png')
     password_hash = db.Column(db.String(128),nullable = False)
