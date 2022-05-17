@@ -16,7 +16,6 @@ mail = Mail()
 bootstrap = Bootstrap()
 admin = Admin()
 
-
 def create_app(config_name):
 
     app = Flask(__name__)
