@@ -29,6 +29,7 @@ def create_app(config_name):
     # Initializing flask extensions
     bootstrap.init_app(app)
     db.init_app(app)
+    
     # migrate = Migrate(app,db)
     login_manager.init_app(app)
     mail.init_app(app)

@@ -1,4 +1,4 @@
-from flask import render_template,redirect,url_for,request
+from flask import render_template,redirect,url_for,request,flash,abort
 from . import main
 from ..models import User,Comment,Post,Subscribers
 from .forms import PostForm,CommentForm,UpdatePostForm,UpdateProfile
@@ -7,21 +7,22 @@ from ..import db
 from ..requests import get_quote
 from ..email import mail_message,notification_message
 from datetime import datetime
-import bleach
+import bleach,os,secrets
 
 
-@main.route('/', methods = ['GET','POST'])
+@main.route('/')
 def index():
+    quote = get_quote()
     user = User.query.filter_by(username='').first()
     posts = Post.get_all_posts()
-    quote = get_quote()
+    
 
     if request.method == 'POST':
         new_sub = Subscribers(email = request.form.get("subscriber"))
-        db.session.add(new_sub)
-        db.session.commit()
+        # db.session.add(new_sub)
+        # db.session.commit()
         mail_message('Thank you for subscribing to The House Of Elegance Blog', 'email/welcome', new_sub.email)
-    return render_template('index.html',user = user,posts = posts, quote = quote)
+    return render_template('index.html',user = user,posts = posts, quote = quotes)
 
 
 @main.route('/secret')

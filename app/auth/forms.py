@@ -1,11 +1,19 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,BooleanField,SubmitField
 from wtforms import ValidationError
-from wtforms.validators import DataRequired,Email,Length,EqualTo, Regexp
+from wtforms.validators import DataRequired,Email,Length,EqualTo,Regexp
 from ..models import User
 
+
+class LoginForm(FlaskForm):
+    email = StringField('Your Email Address',validators=[DataRequired(),Email()])
+    password = PasswordField('Password',validators =[DataRequired()])
+    remember_me = BooleanField('Keep me loggin in')
+    submit = SubmitField('LogIn')
+
+
 class SignupForm(FlaskForm):
-    email = StringField('Your Email Address',validators=[DataRequired(),Length (1, 64),Email()])
+    email = StringField('Your Email Address',validators=[DataRequired(),Email()])
     username = StringField('Enter your username',validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('PasswordField',validators=[DataRequired(), EqualTo('password_confirm', message='Passwords must match')])
     password_confirm = PasswordField('Confirm Password',validators=[DataRequired()])
@@ -20,8 +28,3 @@ class SignupForm(FlaskForm):
             raise ValidationError('That username is taken')
 
 
-class LoginForm(FlaskForm):
-    email = StringField('Your Email Address',validators=[DataRequired(),Length(1,64),Email()])
-    password = PasswordField('Password',validators =[DataRequired()])
-    remember_me = BooleanField('Keep me loggin in')
-    submit = SubmitField('Log In')

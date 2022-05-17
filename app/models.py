@@ -6,15 +6,20 @@ from flask_login import UserMixin
 from . import login_manager
 from datetime import datetime
 
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64),unique=True, index=True)
-    email = db.Column(db.String(255),unique=True, index=True)
+    username = db.Column(db.String(64),unique=True, index=True,nullable = False)
+    email = db.Column(db.String(255),unique=True, index=True,nullable = False)
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
-    bio = db.Column(db.String(255))
-    profile_pic_path = db.Column(db.String())
-    #password_hash = db.Column(db.String(128))
+    bio = db.Column(db.String(255),default ='My default Bio')
+    profile_pic_path = db.Column(db.String(),default ='default.png')
+    password_hash = db.Column(db.String(128),nullable = False)
     pass_secure = db.Column(db.String(128))
     comments = db.relationship('Comment',backref='user',lazy="dynamic")
     posts = db.relationship('Post', backref='author', lazy='dynamic')
@@ -31,9 +36,16 @@ class User(UserMixin,db.Model):
     def verify_password(self,password):
         return check_password_hash(self.pass_secure,password)
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
+    # @login_manager.user_loader
+    # def load_user(user_id):
+    #     return User.query.get(int(user_id))
+    
+    def save(self):
+            db.session.add(self)
+            db.session.commit()
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
     def __repr__(self):
         return f'User {self.username}'
@@ -58,9 +70,6 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime,default=datetime.utcnow)
     content = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
         
     def save_post(self):
         db.session.add(self)
@@ -78,6 +87,9 @@ class Post(db.Model):
     @classmethod
     def get_all_posts(cls):
         return Post.query.order_by(Post.date_posted).all()
+    
+    def __repr__(self):
+            return f"Post('{self.title}', '{self.date_posted}')"
 
 
 class Comment(db.Model):
@@ -143,6 +155,12 @@ class Subscribers(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String(255), unique = True, index = True)
 
+    def save_subscriber(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'Subscriber {self.email}'
 
 class PostLike(db.Model):
     __tablename__ = "post_like"

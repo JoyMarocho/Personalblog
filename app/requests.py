@@ -1,13 +1,10 @@
 import requests
-from .models import Quote
+import json
 
-url = "http://quotes.stormconsultancy.co.uk/random.json"
 
 def get_quote():
-    """
-    Function to consume http request and return a Quote class instance
-    """
-    response = requests.get(url).json()
+    response = requests.get('http://quotes.stormconsultancy.co.uk/random.json')
+    if response.status_code == 200:
+        quote = response.json()
 
-    random_quote = Quote(response.get("author"), response.get("quote"))
-    return random_quote
+        return quote
