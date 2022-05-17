@@ -19,10 +19,12 @@ def index():
 
     if request.method == 'POST':
         new_sub = Subscribers(email = request.form.get("subscriber"))
-        # db.session.add(new_sub)
-        # db.session.commit()
+        db.session.add(new_sub)
+        db.session.commit()
         mail_message('Thank you for subscribing to The House Of Elegance Blog', 'email/welcome', new_sub.email)
-    return render_template('index.html',user = user,posts = posts, quote = quotes)
+    return render_template('index.html',user = user,posts = posts, quote = quote)
+
+
 
 
 @main.route('/secret')
@@ -53,6 +55,7 @@ def post(id):
 
 
 @main.route('/post/<int:id>/<int:comment_id>/delete')
+@login_required
 def delete_comment(id, comment_id):
     post = Post.query.filter_by(id = id).first()
     comment = Comment.query.filter_by(id = comment_id).first()

@@ -1,16 +1,23 @@
-{% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
-
-{% block title %} House of ELegance Log In{% endblock %}
-
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf%}
 {% block content %}
-<div class="container">
-    <h3> Login </h3>
-    <div class="row">
-        <div class="col-md-4">
-            {{wtf.quick_form(form)}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6"id="login">
+                    {% for error in errors %}
+                    {% if errors %}
+                    <div class="alert alert-danger">
+                        
+                            <span>{{ error }}</span>
+                        
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                <h3 class="text-center"><i class="fas fa-user-plus"></i></i>&nbsp; <strong>Sign Up</strong></h3>
+                {{ wtf.quick_form(Signupform) }}
+            </div>
+            <div class="col-md-3"></div>
         </div>
-        <p class="text-center"> New member? <a href="{{ url_for('auth.signup')}}">Click here to Sign Up</a></p>
     </div>
-</div>
 {% endblock %}
